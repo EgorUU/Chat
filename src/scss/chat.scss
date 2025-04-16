@@ -1,0 +1,165 @@
+.messager {
+    width: 100%;
+    display: flex;
+    font-family: "Arial", sans-serif;
+    height: 100%;
+    &__friends {
+        width: 50%;
+        height: 100%;
+        border-right: 1px solid black;
+        background: rgba(95, 93, 93, 0.5);
+    }
+    &__chat {
+        background: rgba(95, 93, 93, 0.5);
+        width: 100%;
+        height: 100%;
+        padding: 0 10px;
+        &-messages {
+            overflow-y: auto;
+            height: 91%;
+            padding: 10px;
+            &-message {
+                position: relative;
+                &-name {
+                    font-size: 11.5px;
+                    margin-bottom: 4px;
+                    font-weight: 600;
+                    color: #fdd178;
+                }
+                &-time {
+                    margin: 0;
+                    display: flex;                
+                    justify-content: end;
+                    font-size: 12px;
+                }
+                h1 {
+                    font-size: 17px;
+                    width: 100%;
+                    margin: 0;
+                }
+                width: 40%;
+                padding: 10px;
+                padding-bottom: 5px;
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            .you {
+                margin-left: auto !important;
+                background: rgba(255, 255, 255, 0.3) !important;
+            }
+        }
+        &-input {
+            display: flex;
+            width: 100%;
+            height: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            .file {
+                width: 10%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover {
+                    cursor: pointer;
+                }
+                svg {
+                    width: 25px;
+                    height: 25px;
+
+                }
+            }
+            
+            input:focus {
+                border: none;
+                list-style: none;
+                outline: none;
+            }
+            input {
+                border: none;
+                list-style: none;
+                outline: none;
+                background: rgba(255, 255, 255, 0);
+            }
+            input[type="text"] {
+                width: 80%;
+                padding: 20px;
+                color: #fff;
+            }
+            .send {
+                width: 20%;
+                height: 100%;
+                color: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                svg {
+                    width: 25px;
+                    height: 25px;
+                }
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        &-background {
+            background: rgba(95, 93, 93, 0.5);
+            width: 50%;
+            height: 100%;
+        }
+    }
+}
+
+
+.messager-main {
+    height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Важно! */
+  }
+  
+  .messager-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../images/31b213760428ac3a0e8632ed2770136d.jpg') center/cover;
+    filter: blur(10px); /* Размываем сам фон */
+    z-index: -1;
+  }
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    h1 {
+        font-size: 40px;
+    }
+    h2 {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}
+.messager__friends {
+    display: flex;
+    flex-direction: column;
+    &-item {
+        background: #fff;
+        border: 2px solid black;
+        cursor: pointer;
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        h1 {
+            font-size: 25px;
+        }
+    }
+}
+  
