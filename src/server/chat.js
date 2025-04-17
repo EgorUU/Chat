@@ -31,12 +31,6 @@ io.on('connect', (socket) => {
 
     socket.emit('load_history', messages)
 
-    // socket.on('push_user', (user) => {
-    //     
-        
-    //     users.push(user)
-    //     io.emit('show_users', users)
-    // })
 
     socket.on('send_message', (message) => {
 
