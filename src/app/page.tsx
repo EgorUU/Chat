@@ -21,13 +21,8 @@ const Chat: React.FC = () => {
         });
         setSocket(newSocket)
 
-        // newSocket.on('show_users', (users: any) => {
-        //     users = users.filter((user: any) => user.name != currentAccount.name)
-        //     setFriends(users)
-        // })
-
         newSocket.on('connect', () => {
-            console.log('Подключено к серверу');
+            
         });
 
 
@@ -36,22 +31,16 @@ const Chat: React.FC = () => {
         });
 
         newSocket?.on('create_message', (data: any) => {
-            console.log('Сработал');
+            
             
             setMessages((prev: any)=> [...prev, data])
         }, [])
         newSocket?.on('load_history', (messagesArray: any) => {
             
             setMessages((prev: any) => [...prev, ...messagesArray])
-            console.log(messages);
+            
             
         })
-
-        // if (currentAccount.name.length > 0) {
-        //     console.log('push');
-            
-        //     newSocket.emit('push_user', currentAccount)
-        // }
 
         return () => {
             newSocket.off('create_message');
@@ -60,7 +49,7 @@ const Chat: React.FC = () => {
     }, [])
     const linkMessage = useRef<any>(null)
     useEffect(() => {
-        console.log('chat');
+        
         
         linkMessage?.current?.scrollIntoView();
     }, [messages])
@@ -111,26 +100,6 @@ const Chat: React.FC = () => {
             {currentAccount.name.length > 0 ? (
                 <div className='messager-main'>
                 <div className="messager">
-                    <div className="messager__friends">
-                        {/* {
-                            friends?.map((friend: any, index: number) => (
-                                <div className="messager__friends-item" key={index} onClick={async () => {
-                                    const newSocket: any = io('http://localhost:5600', {
-                                        withCredentials: true,
-                                        transports: ['websocket', 'polling']
-                                    });
-                                    await newSocket.emit('join_room', [currentAccount, friend])
-                                    await newSocket.on('push_roomId', (roomId: number) => {
-                                        setCurrentRoom(roomId)
-
-                                    })                                    
-                                    setMessages([])
-                                }}>
-                                    <h1>{friend.name}</h1>
-                                </div>
-                            ))
-                        }                 */}
-                    </div>
                     <div className='messager__chat-background'>
                         <div className="messager__chat">
                             <div className="messager__chat-messages" >
