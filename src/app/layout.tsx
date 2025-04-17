@@ -7,7 +7,6 @@ export const metadata = {
 }
 import QueryComponent from './components/QueryComponent';
 import ReduxProvider from './components/ReduxProvider'
-
 // Импорт Компонентов
 
 import 'bootstrap/dist/css/bootstrap.min.css';

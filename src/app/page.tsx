@@ -7,7 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react
 import { io, Socket } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { ICurrentAccount } from '@/types/user.interface';
-
+import '@/scss/media.scss'
 interface IMessage {
     text: string,
     userId: number,
@@ -64,13 +64,32 @@ const Chat: React.FC = () => {
 
     const sendMessage = async () => {
         
-        await socket.emit('send_message', {text: inputMessage.current?.value, userId: currentAccount.id , userName: currentAccount.name ? currentAccount.name : "Неизвестный", time: `${new Date().getHours() > 9 ? new Date().getHours() : "0" + new Date().getHours()}:${new Date().getMinutes() > 9 ? new Date().getMinutes() : "0" + new Date().getMinutes()}`})
-        if (inputMessage.current) {
-            inputMessage.current.value = '';
-            inputMessage.current.blur()
+        if (inputMessage?.current?.value != '') {
+            await socket.emit('send_message', {text: inputMessage.current?.value, userId: currentAccount.id , userName: currentAccount.name ? currentAccount.name : "Неизвестный", time: `${new Date().getHours() > 9 ? new Date().getHours() : "0" + new Date().getHours()}:${new Date().getMinutes() > 9 ? new Date().getMinutes() : "0" + new Date().getMinutes()}`})
+            if (inputMessage.current) {
+                inputMessage.current.value = '';
+                inputMessage.current.blur()
+            }
         }
     }
 
+    const useWindowHeight = () => {
+        const [height, setHeight] = useState(window.innerHeight);
+        
+        useEffect(() => {
+            const handleResize = () => {
+            setHeight(window.innerHeight);
+            };
+        
+            window.addEventListener('resize', handleResize);
+            
+            return () => {
+            window.removeEventListener('resize', handleResize);
+            };
+        }, []);
+        
+        return height;
+    }
     
     const currentAccount = useSelector((state: ICurrentAcc) => state.currentAccount);
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -102,7 +121,7 @@ const Chat: React.FC = () => {
     return (
         <>
             {currentAccount.name.length > 0 ? (
-                <div className='messager-main'>
+                <div className='messager-main' style={{height: `${useWindowHeight() - 56}px`}}>
                 <div className="messager">
                     <div className='messager__chat-background'>
                         <div className="messager__chat">
@@ -127,9 +146,9 @@ const Chat: React.FC = () => {
                                     <GoPaperclip />
                                 </div>
                                 <input type="text" ref={inputMessage}  placeholder='Напишите Сообщение'/>
-                                <div className='send' title='Отправить' onClick={sendMessage}>
+                                <button className='send' title='Отправить' onClick={sendMessage}>
                                     <GoPaperAirplane/>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>
