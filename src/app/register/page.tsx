@@ -20,11 +20,11 @@ const Register: React.FC = () => {
         <>
             <div className='main-login'>
                 <form className="mb-3 login">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Your Name</label>
+                <label htmlFor="exampleFormControlInput1" className="form-label">Напишите ваш никнейм начиная с символа @</label>
                 <input type="text" className="form-control" maxLength={10} id="exampleFormControlInput1" placeholder="Egor" style={{marginBottom: "10px"}} onChange={(e) => dispatch(setNameReg(e.target.value))}/>
                 
                 
-                    <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+                    <label htmlFor="exampleFormControlInput1" className="form-label">Email</label>
                     <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" style={{marginBottom: "5px"}} onChange={ (e) => {
                                dispatch(setEmailReg(e.target.value)) 
                                                             
@@ -33,10 +33,10 @@ const Register: React.FC = () => {
                     />
                     
                 
-                    <label htmlFor="inputPassword5" className="form-label">Password</label>
+                    <label htmlFor="inputPassword5" className="form-label">Пароль</label>
                     <input type="password" id="inputPassword5" maxLength={20} className="form-control" aria-describedby="passwordHelpBlock" onChange={(e) => dispatch(setPasswordReg(e.target.value))}/>
                     <div id="passwordHelpBlock" className="form-text">
-                        Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                    Ваш пароль должен состоять из 8-20 символов, состоять из букв и цифр и не должен содержать пробелов, специальных символов или эмодзи.
                     </div> 
                     <SubmitButton />    
                 </form>

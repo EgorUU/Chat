@@ -2,10 +2,14 @@
 import { useSelector } from 'react-redux';
 import { VscAccount } from "react-icons/vsc";
 import Link from 'next/link'
+import { ICurrentAccount } from '@/types/user.interface';
 
+interface RootState {
+    currentAccount: ICurrentAccount
+}
 
 const AccountLink: React.FC = () => {
-    const currentAccount: any = useSelector((state: any) => state.currentAccount);
+    const currentAccount: any = useSelector((state: RootState) => state.currentAccount);
     return currentAccount.name.length > 0 && currentAccount.email.length > 0 && currentAccount.password.length > 0 ?
         <Link href="/" title="Ваш Аккаунт" style={{marginLeft: "auto", display: "flex", gap: "20px", alignItems: "center"}}>
             <VscAccount />

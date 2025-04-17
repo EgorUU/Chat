@@ -20,12 +20,16 @@ const Login: React.FC = () => {
   const currentEmail = useSelector((state: any) => state.login.email)
   const currentPassword = useSelector((state: any) => state.login.password)
   const router = useRouter()
-
+  const [error, setError] = useState(false)
   const mutation = useMutation<LoginResponse, Error, { email: string; password: string }>({
     mutationFn: async ({ email, password }) => {
         const response = await axios.post('http://localhost:5400/login', { email, password })
-        console.log(response);
-        return response
+        if (response.data) {
+          return response;
+        }
+        else {
+          throw new Error("User is not found");
+        }
     },
     onSuccess: (data) => {
       dispatch(setAccount(data.data))
@@ -33,6 +37,10 @@ const Login: React.FC = () => {
     },
     onError: (err) => {
       console.error("Ошибка входа:", err)
+      setError(true)
+      setTimeout(() => {
+        setError(false)
+      }, 1500)
     }
   })
 
@@ -48,7 +56,7 @@ const Login: React.FC = () => {
     <div className='main-login'>
       <form className="mb-3 login" onSubmit={handleSubmit}>
         <label htmlFor="emailInput" className="form-label">
-          Email address
+          Email
         </label>
         <input
           type="email"
@@ -62,7 +70,7 @@ const Login: React.FC = () => {
         />
       
         <label htmlFor="passwordInput" className="form-label">
-          Password
+          Пароль
         </label>
         <input
           type="password"
@@ -73,16 +81,28 @@ const Login: React.FC = () => {
           onChange={(e) => dispatch(setPassword(e.target.value))}
           required
         />
-        <div id="passwordHelpBlock" className="form-text">
-          Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+        <div id="passwordHelpBlock" className="form-text" style={{color: "#e4e3e3"}}>
+        Ваш пароль должен состоять из 8-20 символов, состоять из букв и цифр и не должен содержать пробелов, специальных символов или эмодзи.
         </div>
       
         <button 
           type="submit" 
-          className="button-add-account" 
-          disabled={mutation.isPending}
+          className={error ? "btn btn-outline-danger" : "button-add-account"} 
+          disabled={mutation.isPending || error}
+          style={error ? {marginTop: "15px", width: "100%", height: "50px", } : {}}
         >
-          {mutation.isPending ? "Входим..." : 'Войти'}
+          {
+            mutation.isPending ? (
+              <>
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" style={{marginRight: "5px"}}></span>
+                  Входим...
+              </>
+            ) : error ? (
+              <span>Неверный логин или пароль.</span>
+            ) :
+            
+            "Войти"
+          }
         </button>
       </form>
     </div>

@@ -1,14 +1,9 @@
 // src/store/reducers/loginReducer.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { ILoginState } from "@/types/user.interface";
 
-
-interface LoginState {
-  email: string;
-  password: string;
-}
-
-const initialState: LoginState = {
+const initialState: ILoginState = {
   email: "",
   password: ""
 };

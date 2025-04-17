@@ -6,14 +6,22 @@ import Link from 'next/link'
 import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useSelector } from 'react-redux';
+import { ICurrentAccount } from '@/types/user.interface';
+
+interface IMessage {
+    text: string,
+    userId: number,
+    userName: string,
+    time: string
+}
+
+interface ICurrentAcc {
+    currentAccount: ICurrentAccount
+}
+
 const Chat: React.FC = () => {
-    const [messages, setMessages] = useState<any>([])
+    const [messages, setMessages] = useState<IMessage[]>([])
     const [socket, setSocket] = useState<any>(null);
-    const [room, setRoom] = useState<any>(null)
-    const newSocket: any = io('http://localhost:5600', {
-        withCredentials: true,
-        transports: ['websocket', 'polling']
-    });
     useEffect(() => {
         const newSocket: any = io('http://localhost:5600', {
             withCredentials: true,
@@ -21,23 +29,19 @@ const Chat: React.FC = () => {
         });
         setSocket(newSocket)
 
-        newSocket.on('connect', () => {
-            
-        });
-
-
-        newSocket.on('connect_error', (err: any) => {
+        newSocket.on('connect_error', (err: Error) => {
             console.error('Ошибка подключения:', err.message);
         });
 
-        newSocket?.on('create_message', (data: any) => {
+        newSocket?.on('create_message', (data: IMessage) => {
             
             
-            setMessages((prev: any)=> [...prev, data])
+            setMessages((prev: IMessage[])=> [...prev, data])
         }, [])
-        newSocket?.on('load_history', (messagesArray: any) => {
+
+        newSocket?.on('load_history', (messagesArray: IMessage[]) => {
             
-            setMessages((prev: any) => [...prev, ...messagesArray])
+            setMessages((prev: IMessage[]) => [...prev, ...messagesArray])
             
             
         })
@@ -47,27 +51,28 @@ const Chat: React.FC = () => {
             newSocket.disconnect();
         };
     }, [])
-    const linkMessage = useRef<any>(null)
+
+
+    const linkMessage = useRef<HTMLDivElement | null>(null)
+
+    
     useEffect(() => {
-        
-        
         linkMessage?.current?.scrollIntoView();
     }, [messages])
 
-    const [friends, setFriends] = useState<any>([
-        
-    ])
-
+    const inputMessage = useRef<HTMLInputElement | null>(null)
 
     const sendMessage = async () => {
         
         await socket.emit('send_message', {text: inputMessage.current?.value, userId: currentAccount.id , userName: currentAccount.name ? currentAccount.name : "Неизвестный", time: `${new Date().getHours() > 9 ? new Date().getHours() : "0" + new Date().getHours()}:${new Date().getMinutes() > 9 ? new Date().getMinutes() : "0" + new Date().getMinutes()}`})
-        inputMessage.current.value = ''
-        inputMessage.current.blur()
+        if (inputMessage.current) {
+            inputMessage.current.value = '';
+            inputMessage.current.blur()
+        }
     }
 
-    const inputMessage = useRef<any>(null)
-    const currentAccount: any = useSelector((state: any) => state.currentAccount);
+    
+    const currentAccount = useSelector((state: ICurrentAcc) => state.currentAccount);
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === "Enter") {
             sendMessage();
@@ -94,7 +99,6 @@ const Chat: React.FC = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown]);
-    const [currentRoom, setCurrentRoom] = useState<number | null>(null)
     return (
         <>
             {currentAccount.name.length > 0 ? (
@@ -104,7 +108,7 @@ const Chat: React.FC = () => {
                         <div className="messager__chat">
                             <div className="messager__chat-messages" >
                                 {
-                                    messages.map((message: any, index: number) => (
+                                    messages.map((message: IMessage, index: number) => (
                                         
                                              <div className={`messager__chat-messages-message ${currentAccount.id == message.userId ? "you" : ""}`} key={index}>   
                                                 <div className='messager__chat-messages-message-container'>

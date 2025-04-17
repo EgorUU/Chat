@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 
-interface LoginState {
+interface IRegisterState {
     name: string,
   email: string;
   password: string;
 }
 
-const initialState: LoginState = {
+const initialState: IRegisterState = {
   name: "",
   email: "",
   password: ""
