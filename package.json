@@ -1,5 +1,5 @@
 {
-  "name": "my-chat-app",
+  "name": "Chat",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "server": "nodemon src/server/server.js",
-    "chat": "nodemon src/server/chat.js"
+    "chat": "nodemon src/server/chat.js",
+    "deploy": "npm run build && npm run export && cp out/* docs/ && git add . && git commit -m \"Deploy to GH-Pages\" && git push origin main"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
