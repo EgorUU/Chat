@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { IRegisterState } from "@/types/user.interface";
+import { api_db } from '@/variables/values'
 
 interface LoginResponse {
     data: {
@@ -28,7 +29,7 @@ export const SubmitButton: React.FC = () => {
                 setError(false)
                 console.log("Условие для отправки данных солюдены");
                 
-                const response: any = await axios.post('http://localhost:5400/register', {name, email, password});
+                const response: any = await axios.post(api_db +'/register', {name, email, password});
                 
                 if (response.data) {
                     return response

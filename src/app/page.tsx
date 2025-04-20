@@ -8,6 +8,7 @@ import { io, Socket } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { ICurrentAccount } from '@/types/user.interface';
 import '@/scss/media.scss'
+import { api_chat } from '@/variables/values';
 interface IMessage {
     text: string,
     userId: number,
@@ -23,7 +24,7 @@ const Chat: React.FC = () => {
     const [messages, setMessages] = useState<IMessage[]>([])
     const [socket, setSocket] = useState<any>(null);
     useEffect(() => {
-        const newSocket: any = io('http://localhost:5600', {
+        const newSocket: any = io(api_chat, {
             withCredentials: true,
             transports: ['websocket', 'polling']
         });
