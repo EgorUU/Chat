@@ -9,6 +9,7 @@ export const metadata = {
 import ReduxProvider from './components/ReduxProvider'
 // Импорт Компонентов
 
+import QueryComponent from './components/QueryComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/scss/main.scss'
 import ClientBootstrap from './components/Bootstrap'
@@ -33,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ReduxProvider>
-          <Header />
-          <main>
-            {children}          
-          </main>
-        </ReduxProvider>
+        <QueryComponent>
+          <ReduxProvider>
+            <Header />
+            <main>
+              {children}          
+            </main>
+          </ReduxProvider>
+        </QueryComponent>
       </body>
     </html>
   )
