@@ -5,7 +5,7 @@ export const metadata = {
     icon: '/page.ico'
   }
 }
-import QueryComponent from './components/QueryComponent';
+// import QueryComponent from './components/QueryComponent';
 import ReduxProvider from './components/ReduxProvider'
 // Импорт Компонентов
 
@@ -34,13 +34,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReduxProvider>
-            <QueryComponent>
-              <Header />
-              <main>
-                {children}          
-              </main>
-            </QueryComponent>
-          </ReduxProvider>
+          <Header />
+          <main>
+            {children}          
+          </main>
+        </ReduxProvider>
       </body>
     </html>
   )
