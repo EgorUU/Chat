@@ -9,7 +9,7 @@ const store = configureStore({
     register: registerSlice,
     currentAccount: currentAccountSlice
   },
-  devTools: process.env.NODE_ENV !== 'production'
+  devTools: true
 });
 
 export type RootState = ReturnType<typeof store.getState>;
