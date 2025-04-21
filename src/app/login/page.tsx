@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { FormEvent, useState } from 'react'
+import { api_db } from '@/variables/values'
 
 interface LoginResponse {
   data: {
@@ -23,7 +24,7 @@ const Login: React.FC = () => {
   const [error, setError] = useState(false)
   const mutation = useMutation<LoginResponse, Error, { email: string; password: string }>({
     mutationFn: async ({ email, password }) => {
-        const response = await axios.post('http://localhost:5400/login', { email, password })
+        const response = await axios.post(api_db + '/login', { email, password })
         if (response.data) {
           return response;
         }

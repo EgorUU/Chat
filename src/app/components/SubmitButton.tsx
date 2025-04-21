@@ -28,8 +28,9 @@ export const SubmitButton: React.FC = () => {
             if (currentEmail.length > 0 && currentName.length > 0 && currentPassword.length > 0 && currentName[0] == '@') {
                 setError(false)
                 console.log("Условие для отправки данных солюдены");
-                
+                console.log(api_db +'/register');
                 const response: any = await axios.post(api_db +'/register', {name, email, password});
+                
                 
                 if (response.data) {
                     return response
