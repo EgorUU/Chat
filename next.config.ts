@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
-
+const repoName = '/Chat'
 const nextConfig: NextConfig = {
     output: 'export',
-    asePath: process.env.NODE_ENV === 'production' ? '/Chat' : '', 
-    assetPrefix: process.env.NODE_ENV === 'production' ? '/Chat/' : '',
+    assetPrefix: repoName,
+    basePath: repoName,
 };
 
 export default nextConfig;
