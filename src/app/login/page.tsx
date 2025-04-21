@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     },
     onSuccess: (data) => {
       dispatch(setAccount(data.data))
-      router.push('/')
+      router.push('/Chat/')
     },
     onError: (err) => {
       console.error("Ошибка входа:", err)
