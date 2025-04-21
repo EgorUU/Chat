@@ -20,7 +20,7 @@ interface ICurrentAcc {
     currentAccount: ICurrentAccount
 }
 
-const Chat: React.FC = () => {
+const Page: React.FC = () => {
     const [messages, setMessages] = useState<IMessage[]>([])
     const [socket, setSocket] = useState<any>(null);
     useEffect(() => {
@@ -163,4 +163,4 @@ const Chat: React.FC = () => {
     )
 };
 
-export default Chat
+export default Page
