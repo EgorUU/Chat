@@ -1,5 +1,5 @@
 import Link from "next/link"
-
+import '@/scss/chat.scss'
 const Page: React.FC = () => {
     return (
         <div className='welcome'>
