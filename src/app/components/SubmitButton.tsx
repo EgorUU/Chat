@@ -51,7 +51,7 @@ export const SubmitButton: React.FC = () => {
             await dispatch(setAccount(data.data));  
             console.log(currentName);
                           
-            router.push('/Chat/')
+            router.push('/')
         },
         onError: (err) => {
             console.log("Ошибка", err);
