@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
     output: 'export',
     assetPrefix: repoName,
     basePath: repoName,
+    trailingSlash: true
 };
 
 export default nextConfig;
