@@ -16,7 +16,7 @@ const Header: React.FC = () => {
         <header>
             <nav className="navbar bg-dark" style={{display: "flex", justifyContent: "space-between", paddingLeft: "30px", paddingRight: "30px"}}>
                 <div className="container-fluid" style={{width:"100px", margin: "0"}}>
-                    <Link className="navbar-brand logo" style={{color: 'white', fontFamily: 'Underdog'}} href="/">Messager</Link>
+                    <Link className="navbar-brand logo" style={{color: 'white', fontFamily: 'Underdog'}} href="/messager">Messager</Link>
                 </div>
                 <div className="container-fluid" style={{width: "235px", margin: "0"}}>                    
                     <AccountLink />
