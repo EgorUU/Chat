@@ -3,7 +3,7 @@ const repoName = '/Chat'
 const nextConfig: NextConfig = {
     output: 'export',
     assetPrefix: repoName,
-    // basePath: repoName,
+    basePath: repoName,
 };
 
 export default nextConfig;
