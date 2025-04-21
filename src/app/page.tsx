@@ -23,35 +23,35 @@ interface ICurrentAcc {
 const Chat: React.FC = () => {
     const [messages, setMessages] = useState<IMessage[]>([])
     const [socket, setSocket] = useState<any>(null);
-    useEffect(() => {
-        const newSocket: any = io(api_chat, {
-            withCredentials: true,
-            transports: ['websocket', 'polling']
-        });
-        setSocket(newSocket)
+    // useEffect(() => {
+    //     const newSocket: any = io(api_chat, {
+    //         withCredentials: true,
+    //         transports: ['websocket', 'polling']
+    //     });
+    //     setSocket(newSocket)
 
-        newSocket.on('connect_error', (err: Error) => {
-            console.error('Ошибка подключения:', err.message);
-        });
+    //     newSocket.on('connect_error', (err: Error) => {
+    //         console.error('Ошибка подключения:', err.message);
+    //     });
 
-        newSocket?.on('create_message', (data: IMessage) => {
+    //     newSocket?.on('create_message', (data: IMessage) => {
             
             
-            setMessages((prev: IMessage[])=> [...prev, data])
-        }, [])
+    //         setMessages((prev: IMessage[])=> [...prev, data])
+    //     }, [])
 
-        newSocket?.on('load_history', (messagesArray: IMessage[]) => {
+    //     newSocket?.on('load_history', (messagesArray: IMessage[]) => {
             
-            setMessages((prev: IMessage[]) => [...prev, ...messagesArray])
+    //         setMessages((prev: IMessage[]) => [...prev, ...messagesArray])
             
             
-        })
+    //     })
 
-        return () => {
-            newSocket.off('create_message');
-            newSocket.disconnect();
-        };
-    }, [])
+    //     return () => {
+    //         newSocket.off('create_message');
+    //         newSocket.disconnect();
+    //     };
+    // }, [])
 
 
     const linkMessage = useRef<HTMLDivElement | null>(null)
