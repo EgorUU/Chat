@@ -24,23 +24,26 @@ app.use(cors())
 
 const users = []
 
-const messages = [];
+let messages = [];
 
 io.on('connect', (socket) => {
     
 
-    socket.emit('load_history', messages)
+    // socket.emit('load_history', messages)
 
+    socket.on('join_room', async (data) => {
+        await socket.leave(data.lastId)
+        await socket.join(data.newId)
+        messages = [...data.newMessages]
+        socket.emit('load_history')
+
+    })
 
     socket.on('send_message', (message) => {
 
         messages.push(message)
-
         
-            
-
-    // /*Указываем на комнату -> */ io.to('new_room')./* И отправляем запрос на создание сообщения */emit('create_message', message)
-        io.emit('create_message', message)
+        io.to(message.room).emit('create_message', message)
     })
 
     socket.on('disconnect', () => {

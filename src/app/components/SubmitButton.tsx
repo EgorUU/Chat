@@ -23,21 +23,34 @@ export const SubmitButton: React.FC = () => {
     const currentPassword: string = useSelector((state: any) => state.register.password);
     const currentName: string = useSelector((state: any) => state.register.name);
     const [error, setError] = useState<boolean>(false)
+    const [nameError, setNameError] = useState<boolean>(false)
     const mutation = useMutation<LoginResponse, Error, IRegisterState>({
         mutationFn: async ({name, email, password}) => {
             if (currentEmail.length > 0 && currentName.length > 0 && currentPassword.length > 0 && currentName[0] == '@') {
                 setError(false)
                 console.log("Условие для отправки данных солюдены");
-                console.log(api_db +'/register');
-                const response: any = await axios.post(api_db +'/register', {name, email, password});
-                
-                
-                if (response.data) {
-                    return response
-                }
 
-                else {
-                    throw new Error('Ошибка при регистрации!')
+                try {
+                    const res = await axios.post(api_db + '/name-verification', {currentName})
+
+                    if (res.data) {
+                        console.log(api_db +'/register');
+                        const response: any = await axios.post(api_db +'/register', {name, email, password});
+                        if (response.data) {
+                            return response
+                        }
+        
+                        else {
+                            throw new Error('Ошибка при регистрации!')
+                        }
+                        
+                    }
+                } catch (err) {
+                    setNameError(true)
+                    setTimeout(() => {
+                        setNameError(false)
+                    }, 1200)
+                    
                 }
             }
             else {
@@ -70,7 +83,7 @@ export const SubmitButton: React.FC = () => {
     return (
         <>
             {
-                error ? <button type="button" className="btn btn-outline-danger" style={{marginTop: "15px", width: "100%", height: "50px", }}>Пожалуйста, правильно заполните все формы!</button> 
+                error || nameError ? <button type="button" className="btn btn-outline-danger" style={{marginTop: "15px", width: "100%", height: "50px", }}>{`${error ? "Пожалуйста, правильно заполните все формы!" : nameError && "Данное имя уже занято!"}`}</button> 
                 : <button className='button-add-account' onClick={SubmitButton}>{mutation.isPending ? (
                 <>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" style={{marginRight: "5px"}}></span>
