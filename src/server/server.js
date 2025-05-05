@@ -5,6 +5,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const db = new Pool({
+    // user: "postgres1",
+    // password: "qZzo9T984BcpXAQCaL239rWoWvb8w2Om",
+    // host: "dpg-d02m2c6uk2gs73ekvo4g-a",
+    // port: 5432,
+    // database: 'chat_db_spoo'
     user: "postgres",
     password: "123",
     host: "localhost",
@@ -43,8 +48,10 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/name-verification', async (req, res) => {
-  const {name} = req.body
-  const query = await db.query('SELECT name from "user" WHERE name = $1 RETURNING *', [name])
+  const {currentName} = req.body
+  console.log("name" + currentName);
+  
+  const query = await db.query('SELECT name from "user" WHERE name = $1', [currentName])
   res.json(query.rows[0])
 })
 

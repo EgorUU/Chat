@@ -29,29 +29,32 @@ export const SubmitButton: React.FC = () => {
             if (currentEmail.length > 0 && currentName.length > 0 && currentPassword.length > 0 && currentName[0] == '@') {
                 setError(false)
                 console.log("Условие для отправки данных солюдены");
-
-                try {
-                    const res = await axios.post(api_db + '/name-verification', {currentName})
-
-                    if (res.data) {
-                        console.log(api_db +'/register');
-                        const response: any = await axios.post(api_db +'/register', {name, email, password});
-                        if (response.data) {
-                            return response
-                        }
-        
-                        else {
-                            throw new Error('Ошибка при регистрации!')
-                        }
-                        
+                console.log(currentName);
+                
+                const res = await axios.post(api_db + '/name-verification', {currentName})
+                console.log(res);
+                
+                if (res.data === "") {
+                    console.log('Пользвоателе нет');
+                    
+                    console.log(api_db +'/register');
+                    const response: any = await axios.post(api_db +'/register', {name, email, password});
+                    if (response.data) {
+                        return response
                     }
-                } catch (err) {
+    
+                    else {
+                        throw new Error('Ошибка при регистрации!')
+                    }
+                    
+                }
+                else {
                     setNameError(true)
                     setTimeout(() => {
                         setNameError(false)
                     }, 1200)
-                    
                 }
+                
             }
             else {
                 setError(true)
@@ -83,7 +86,7 @@ export const SubmitButton: React.FC = () => {
     return (
         <>
             {
-                error || nameError ? <button type="button" className="btn btn-outline-danger" style={{marginTop: "15px", width: "100%", height: "50px", }}>{`${error ? "Пожалуйста, правильно заполните все формы!" : nameError && "Данное имя уже занято!"}`}</button> 
+                error || nameError ? <button type="button" className="btn btn-outline-danger" style={{marginTop: "15px", width: "100%", height: "50px", }}>{`${error ? "Пожалуйста, правильно заполните все формы!" : nameError && "Данный никнейм уже занят!"}`}</button> 
                 : <button className='button-add-account' onClick={SubmitButton}>{mutation.isPending ? (
                 <>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" style={{marginRight: "5px"}}></span>

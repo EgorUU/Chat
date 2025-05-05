@@ -297,15 +297,19 @@ const Page: React.FC = () => {
                                         }
                                         <div ref={linkMessage}></div>
                                     </div>
-                                    <div className="messager__chat-input">
-                                        <div className='file' title='Прикрепить Файл'>
-                                            <GoPaperclip />
-                                        </div>
-                                        <input type="text" ref={inputMessage}  placeholder='Напишите Сообщение'/>
-                                        <button className='send' title='Отправить' onClick={sendMessage}>
-                                            <GoPaperAirplane/>
-                                        </button>
-                                    </div>
+                                    {
+                                        currentRoom !== 0 && (
+                                            <div className="messager__chat-input">
+                                                <div className='file' title='Прикрепить Файл'>
+                                                    <GoPaperclip />
+                                                </div>
+                                                <input type="text" ref={inputMessage}  placeholder='Напишите Сообщение'/>
+                                                <button className='send' title='Отправить' onClick={sendMessage}>
+                                                    <GoPaperAirplane/>
+                                                </button>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>
